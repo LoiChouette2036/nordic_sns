@@ -1,0 +1,12 @@
+<h1>Profile of <%= @profile.name %></h1>
+
+<p><strong>Bio:</strong> <%= @profile.bio %></p>
+<p><strong>Patron Deity:</strong> <%= @profile.patron_deity %></p>
+<p><strong>Image:</strong></p>
+<% if @profile.image.present? %>
+  <img src="<%= @profile.image %>" alt="<%= @profile.name %>'s image" style="max-width: 300px; height: auto;">
+<% else %>
+  <p>No image provided.</p>
+<% end %>
+
+<%= link_to "Edit Profile", edit_profile_path, class: "btn btn-primary" %>

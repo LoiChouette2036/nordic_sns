@@ -23,6 +23,26 @@
   </head>
 
   <body>
+    <div id="flash-messages">
+      <% flash.each do |key, message| %>
+        <div class="alert <%= key == 'notice' ? 'alert-success' : 'alert-danger' %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+    </div>
+
+    <nav id="main-nav">
+      <% if user_signed_in? %>
+        <p>Welcome, <%= current_user.email %>!</p>
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+      <% else %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
+        <%= link_to "Login", new_user_session_path, class: "btn btn-secondary" %>
+      <% end %>
+    </nav>
+
+
     <%= yield %>
   </body>
 </html>
