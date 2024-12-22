@@ -65,3 +65,7 @@ end
 gem "font-awesome-sass"
 
 gem "devise"
+
+gem "sassc-rails"
+
+gem "bootstrap"
