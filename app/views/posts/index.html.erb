@@ -19,13 +19,29 @@
     </div>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body" data-sidebar-target="content">
-        <!-- Content should appear here -->
-    </div>
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Section for displaying the original post --> 
+            <div data-sidebar-target="content">
+                <!-- Dynamically injected parent post will appear here -->
+            </div>
+            
+            <!-- Comment Form -->
+            <form class="mt-4" action="/posts" method="post">
+                <div class="mb-3">
+                    <textarea class="form-control" name="post[content]" rows="3" placeholder="Write your comment..." required></textarea>
+                </div>
+                <input type="hidden" name="post[parent_post_id]" value="">
+                <button type="submit" class="btn btn-primary">Submit Comment</button>   
+            </form>
+
+            <div class="comments-list mt-4" data-sidebar-target="commentsList">
+                <!-- Comments will appear here dynamically -->
+            </div>            
+        </div>
     </div>
     <%= link_to "Return To Profile", profile_path, class: "btn btn-primary" %><br>
 </div>

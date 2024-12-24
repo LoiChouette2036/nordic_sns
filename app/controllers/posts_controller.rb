@@ -10,7 +10,12 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    render json: @post.as_json(include: :user)
+    if @post
+      puts "Replies: #{@post.replies.as_json}"
+      render json: @post.as_json(include: { user: {}, replies: { include: :user } })
+    else
+      render json: { error: "Post not found" }, status: :not_found
+    end
   end
 
   def create
@@ -18,6 +23,11 @@ class PostsController < ApplicationController
     # @post.user - current_user
     # these lines are equal to the one below :)
     @post = current_user.posts.new(post_params) # automaticcaly sets user_id
+
+    if params[:parent_post_id].present?
+      @post.parent_post_id = params[:parent_post_id]
+    end
+
     if @post.save
       redirect_to posts_path, notice: "Post created successfully"
     else
@@ -29,6 +39,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:content, :parent_post_id)
+    params.require(:post).permit(:content)
   end
 end
