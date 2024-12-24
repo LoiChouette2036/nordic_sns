@@ -1,0 +1,31 @@
+<div class="main" data-controller="sidebar">
+    <%= form_with model: @post, url: posts_path, local: true, class: "new-post-form" do |f| %>
+    <div class="form-group">
+        <%= f.text_area :content, rows: 3, placeholder: "What's on your mind?", class: "form-control" %>
+    </div>
+    <%= f.submit "Post", class: "btn btn-primary mt-2" %>
+    <% end %>
+
+    <div class="posts">
+    <% @posts.each do |post| %>
+        <div class="post">
+        <p><strong><%= post.user.email %></strong>:</p>
+        <p><%= post.content %></p>
+        <p><small>Posted at <%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small></p>
+        <button class="btn btn-primary" type="button" data-action="click->sidebar#show" data-post-id="<%= post.id%>" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">comments</button>
+        </div>
+        <hr>
+    <% end %>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" data-sidebar-target="content">
+        <!-- Content should appear here -->
+    </div>
+    </div>
+    <%= link_to "Return To Profile", profile_path, class: "btn btn-primary" %><br>
+</div>
