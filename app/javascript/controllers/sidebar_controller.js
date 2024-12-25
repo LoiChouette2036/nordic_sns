@@ -32,12 +32,14 @@ export default class extends Controller {
         // Populate the hidden input with the parent_post_id
         const parentPostIdInput = this.element.querySelector('input[name="post[parent_post_id]"]');
         if (parentPostIdInput) {
-          parentPostIdInput.value = postId; // Set the parent_post_id to the current post ID
+          parentPostIdInput.value = postId;
         }
 
         // Display the comments
         this.commentsListTarget.innerHTML = ""; // Clear existing comments
+        console.log(`To see the replies: ${data.replies}`)
         data.replies.forEach(reply => {
+          console.log(`To see the reply: ${reply}`)
           const commentElement = document.createElement("div");
           commentElement.classList.add("comment");
           commentElement.innerHTML = `
@@ -48,5 +50,23 @@ export default class extends Controller {
         });
       })
       .catch(error => console.error("Error fetching post:", error));
+  }
+
+  submitComment(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    form.requestSubmit(); // Let Rails and Turbo handle the rest
+  }  
+
+  // method to add coms to the list
+  addCommentToList(comment) {
+    const commentElement = document.createElement("div");
+    commentElement.classList.add("comment");
+    commentElement.innerHTML = `
+      <p><strong>${comment.user.email}</strong>: ${comment.content}</p>
+      <p><small>Posted at ${new Date(comment.created_at).toLocaleString()}</small></p>
+    `;
+    this.commentsListTarget.appendChild(commentElement);
   }
 }

@@ -19,26 +19,42 @@ class PostsController < ApplicationController
   end
 
   def create
-    # @post = Post.new(post_params)
-    # @post.user - current_user
-    # these lines are equal to the one below :)
-    @post = current_user.posts.new(post_params) # automaticcaly sets user_id
+    @post = current_user.posts.new(post_params)
 
-    if params[:parent_post_id].present?
-      @post.parent_post_id = params[:parent_post_id]
+    # Set parent_post_id if provided
+    if params[:post][:parent_post_id].present?
+      @post.parent_post_id = params[:post][:parent_post_id]
     end
 
     if @post.save
-      redirect_to posts_path, notice: "Post created successfully"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(
+            "comments_list_#{@post.parent_post_id || @post.id}",
+            partial: "posts/comment",
+            locals: { comment: @post }
+          )
+        end
+        format.html { redirect_to posts_path, notice: "Post created successfully" }
+      end
     else
-      @posts = Post.where(parent_post_id: nil).includes(:replies, :user).order(created_at: :desc)
-      render :index
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "new_comment_form",
+            partial: "posts/form",
+            locals: { post: @post }
+          )
+        end
+        format.html { redirect_to posts_path, alert: "Error creating post" }
+      end
     end
   end
+
 
   private
 
   def post_params
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:content, :parent_post_id)
   end
 end

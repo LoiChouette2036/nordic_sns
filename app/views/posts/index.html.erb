@@ -30,7 +30,7 @@
             </div>
             
             <!-- Comment Form -->
-            <form class="mt-4" action="/posts" method="post">
+            <form class="mt-4" action="/posts" method="post" data-remote="true" data-action="submit->sidebar#submitComment">
                 <div class="mb-3">
                     <textarea class="form-control" name="post[content]" rows="3" placeholder="Write your comment..." required></textarea>
                 </div>
@@ -38,9 +38,9 @@
                 <button type="submit" class="btn btn-primary">Submit Comment</button>   
             </form>
 
-            <div class="comments-list mt-4" data-sidebar-target="commentsList">
+            <div id="comments_list_<%= @post.try(:id) %>" class="comments-list mt-4" data-sidebar-target="commentsList">
                 <!-- Comments will appear here dynamically -->
-            </div>            
+            </div>
         </div>
     </div>
     <%= link_to "Return To Profile", profile_path, class: "btn btn-primary" %><br>
