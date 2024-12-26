@@ -1,47 +1,11 @@
-<div class="main" data-controller="sidebar">
-    <%= form_with model: @post, url: posts_path, local: true, class: "new-post-form" do |f| %>
-    <div class="form-group">
-        <%= f.text_area :content, rows: 3, placeholder: "What's on your mind?", class: "form-control" %>
-    </div>
-    <%= f.submit "Post", class: "btn btn-primary mt-2" %>
-    <% end %>
+<h1>Post</h1>
 
-    <div class="posts">
-    <% @posts.each do |post| %>
-        <div class="post">
-        <p><strong><%= post.user.email %></strong>:</p>
-        <p><%= post.content %></p>
-        <p><small>Posted at <%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small></p>
-        <button class="btn btn-primary" type="button" data-action="click->sidebar#show" data-post-id="<%= post.id%>" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">comments</button>
-        </div>
-        <hr>
-    <% end %>
-    </div>
+<%= render "posts/form", post: @post %>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <!-- Section for displaying the original post --> 
-            <div data-sidebar-target="content">
-                <!-- Dynamically injected parent post will appear here -->
-            </div>
-            
-            <!-- Comment Form -->
-            <form class="mt-4" action="/posts" method="post" data-remote="true" data-action="submit->sidebar#submitComment">
-                <div class="mb-3">
-                    <textarea class="form-control" name="post[content]" rows="3" placeholder="Write your comment..." required></textarea>
-                </div>
-                <input type="hidden" name="post[parent_post_id]" value="">
-                <button type="submit" class="btn btn-primary">Submit Comment</button>   
-            </form>
-
-            <div id="comments_list_<%= @post.try(:id) %>" class="comments-list mt-4" data-sidebar-target="commentsList">
-                <!-- Comments will appear here dynamically -->
-            </div>
-        </div>
-    </div>
-    <%= link_to "Return To Profile", profile_path, class: "btn btn-primary" %><br>
+<div id="posts">
+  <% @posts.each do |post| %>
+    <%= render "posts/post", post: post %>
+  <% end %>
 </div>
+
+<%= link_to "Return to profile", profile_path %>

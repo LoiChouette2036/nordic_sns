@@ -1,0 +1,10 @@
+<div class="post" id="post_<%= post.id %>">
+    <p><strong><%= post.user.email %></strong>: <%= post.content %></p>
+    <small><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
+    <div>
+        <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_<%= post.id %>" aria-controls="offcanvas_<%= post.id %>">
+            Comment
+        </button>
+    </div>
+    <%= render "posts/comment_sidebar", post: post %>
+</div>

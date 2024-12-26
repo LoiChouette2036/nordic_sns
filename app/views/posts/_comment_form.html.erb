@@ -1,0 +1,9 @@
+<%= form_with model: post, url: posts_path, local: false, id: "new_comment_form_#{parent_post_id}" do |f| %>
+  <%= f.hidden_field :parent_post_id, value: parent_post_id %>
+  <div>
+    <%= f.text_area :content, placeholder: "Write your comment...", rows: 2 %>
+  </div>
+  <div>
+    <%= f.submit "Comment", class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas_<%= post.id %>" aria-labelledby="offcanvas_label_<%= post.id %>">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvas_label_<%= post.id %>">Comments</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Original Post -->
+    <div class="original-post">
+      <p><strong><%= post.user.email %></strong>: <%= post.content %></p>
+      <small><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
+    </div>
+
+    <!-- Comment Form -->
+    <div class="comment-form">
+        <%= render "posts/comment_form", post: Post.new, parent_post_id: post.id %>
+    </div>
+
+
+    <!-- Comments List -->
+    <div id="comments_<%= post.id %>" class="comments-list">
+      <% post.replies.each do |comment| %>
+        <div class="comment" id="comment_<%= comment.id %>">
+          <p><strong><%= comment.user.email %></strong>: <%= comment.content %></p>
+          <small><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
