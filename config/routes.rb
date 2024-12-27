@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root "pages#home"
   resource :profile, only: [ :new, :create, :edit, :update, :show ]
   resources :posts, only: [ :index, :create, :show ]
-  resources :conversations
+  resources :conversations, only: [ :index, :create, :update, :show ]
 
   # Add search route for users
   get "/users/search", to: "users#search"

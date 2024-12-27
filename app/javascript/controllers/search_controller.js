@@ -40,8 +40,17 @@ export default class extends Controller {
     // Iterate over the user data and create a list item for each user
     users.forEach((user) => {
       const listItem = document.createElement("li");
-      listItem.className = "list-group-item"; // Add Bootstrap styling for list items
-      listItem.textContent = user.name; // Set the text content to the user's name
+      listItem.className = "list-group-item d-flex justify-content-between align-items-center"; // Add Bootstrap styling for list items
+      listItem.innerHTML = `
+      <span>${user.name}</span>
+      <button 
+        class="btn btn-primary btn-sm"
+        data-user-id="${user.id}"
+        data-action="click->search#startConversation"
+      >
+        Start Conversation
+      </button>
+      `;
       this.resultsTarget.appendChild(listItem); // Append the <li> to the results ul
     });
 
@@ -53,5 +62,30 @@ export default class extends Controller {
   clearResults() {
     this.resultsTarget.innerHTML = ""; // Clear the <ul> content
     this.resultsTarget.style.display = "none"; // Hide the <ul>
+  }
+
+  startConversation(event) {
+    const userId = event.target.dataset.userId; // Get the user ID from the button's data attribute
+
+    if (confirm("Do you want to start a conversation with this user?")) {
+      // Send a POST request to create a conversation
+      fetch("/conversations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').textContent,
+        },
+        body: JSON.stringify({ receiver_id: userId }),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Failed to start conversation");
+          return response.json();
+        })
+        .then((data) => {
+          alert("Conversation request sent!");
+          this.clearResults(); // Clear search results
+        })
+        .catch((error) => console.error("Error starting conversation:", error));
+    }
   }
 }

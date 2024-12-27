@@ -1,0 +1,15 @@
+<!-- app/views/conversations/_conversations_list.html.erb -->
+
+<!-- This partial renders a list of accepted conversations for a given user -->
+<% if conversations.any? %>
+  <ul class="list-group">
+    <% conversations.each do |conversation| %>
+      <li class="list-group-item">
+        <!-- conversation_partner is a helper method that returns the "other user" name -->
+        <%= link_to conversation_partner(conversation), conversation_path(conversation) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You have no accepted conversations.</p>
+<% end %>

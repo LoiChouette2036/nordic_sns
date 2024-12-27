@@ -3,6 +3,7 @@ class Conversation < ApplicationRecord
   belongs_to :receiver, class_name: "User"
 
   validates :sender_id, uniqueness: { scope: :receiver_id }
+  validates :status, inclusion: { in: %w[pending accepted declined] }
 
   validate :sender_and_receiver_must_be_different
 

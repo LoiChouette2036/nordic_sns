@@ -12,3 +12,11 @@
 <%= link_to "Edit Profile", edit_profile_path, class: "btn btn-primary" %><br>
 <%= link_to "Post", posts_path, class: "btn btn-primary"%><br>
 <%= link_to "View Conversation", conversations_path, class: "btn btn-primary" %>
+
+<hr>
+
+<h2>Pending Conversation Requests</h2>
+<turbo-frame id="pending-requests">
+  <!-- We render the partial that shows all pending requests for this user -->
+  <%= render "conversations/pending_requests" %>
+</turbo-frame>

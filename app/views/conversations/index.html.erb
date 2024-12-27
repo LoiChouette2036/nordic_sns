@@ -23,3 +23,9 @@
     </div>
   </div>
 </div>
+
+<!-- Container for accepted conversations -->
+<div id="conversations-list">
+  <%= render partial: "conversations/conversations_list", 
+             locals: { conversations: @conversations } %>
+</div>

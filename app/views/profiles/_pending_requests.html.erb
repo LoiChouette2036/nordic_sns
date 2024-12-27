@@ -1,0 +1,13 @@
+<% if current_user.conversations.where(receiver: current_user, status: "pending").exists? %>
+  <ul>
+    <% current_user.conversations.where(receiver: current_user, status: "pending").each do |conversation| %>
+      <li>
+        <strong>Request from:</strong> <%= conversation.sender.profile.name %>
+        <%= button_to "Accept", conversation_path(conversation, status: "accepted"), method: :patch, class: "btn btn-success btn-sm" %>
+        <%= button_to "Decline", conversation_path(conversation, status: "declined"), method: :patch, class: "btn btn-danger btn-sm" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No pending requests.</p>
+<% end %>

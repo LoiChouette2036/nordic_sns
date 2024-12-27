@@ -42,6 +42,12 @@
       <% end %>
     </nav>
 
+     <% if user_signed_in? %>
+      <!-- This line subscribes the current_user to Turbo Streams 
+          so broadcast_replace_to(current_user, ...) fonctionne. -->
+      <%= turbo_stream_from current_user %>
+    <% end %>
+
 
     <%= yield %>
   </body>
