@@ -28,6 +28,19 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def test_turbo_stream
+    render turbo_stream: turbo_stream.append(
+      "pending-requests",
+      partial: "conversations/pending_request",
+      locals: { conversation: Conversation.last }
+    )
+  end
+
+  def test_broadcast
+    render turbo_stream: turbo_stream.append("pending-requests", "<p>Test broadcast</p>")
+  end
+
+
   private
 
   def set_profile

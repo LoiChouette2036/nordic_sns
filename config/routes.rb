@@ -3,8 +3,16 @@ Rails.application.routes.draw do
   root "pages#home"
   resource :profile, only: [ :new, :create, :edit, :update, :show ]
   resources :posts, only: [ :index, :create, :show ]
-  resources :conversations, only: [ :index, :create, :update, :show ]
+  resources :conversations do
+    member do
+      patch :accept
+    end
+  end
 
   # Add search route for users
   get "/users/search", to: "users#search"
+
+  get "/test_turbo_stream", to: "profiles#test_turbo_stream"
+
+  get "test_broadcast", to: "profiles#test_broadcast"
 end

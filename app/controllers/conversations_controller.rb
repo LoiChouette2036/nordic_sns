@@ -1,5 +1,9 @@
+# app/controllers/conversations_controller.rb
 class ConversationsController < ApplicationController
   before_action :authenticate_user!
+  protect_from_forgery with: :exception
+
+  # List all accepted conversations for the current user
   def index
     @conversations = Conversation.where(
       "(sender_id = :user_id OR receiver_id = :user_id) AND status = :status",
@@ -8,86 +12,101 @@ class ConversationsController < ApplicationController
     )
   end
 
+  # Create a new conversation request (status: "pending")
   def create
-    receiver = User.find(params[:receiver_id])
-    # we create the conv in pending
-    conversation = Conversation.new(sender: current_user, receiver: receiver, status: "pending")
+    Rails.logger.debug("Params received: #{params.inspect}")
+    receiver = User.find_by(id: params[:receiver_id])
+
+    if receiver.nil?
+      render json: { success: false, errors: [ "Receiver not found" ] }, status: :unprocessable_entity
+      return
+    end
+
+    if current_user == receiver
+      render json: { success: false, errors: [ "You cannot start a conversation with yourself" ] }, status: :unprocessable_entity
+      return
+    end
+
+    existing_conversation = Conversation.find_by(sender: current_user, receiver: receiver) ||
+                            Conversation.find_by(sender: receiver, receiver: current_user)
+
+    if existing_conversation
+      render json: { success: false, message: "Conversation already exists" }, status: :unprocessable_entity
+      return
+    end
+
+    # Create a new pending conversation
+    conversation = Conversation.new(
+      conversation_params.merge(sender: current_user, status: "pending")
+    )
 
     if conversation.save
-      # Broadcast Turbo Stream update
-      broadcast_append_to(
-        receiver,
-        target: "pending-requests",
-        partial: "pending_requests",
-        locals: { current_user: receiver }
-      )
+      # Broadcast the pending request to the receiver
+      conversation.broadcast_to_receiver
       render json: { success: true, message: "Conversation request sent" }, status: :ok
     else
       render json: { success: false, errors: conversation.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
+  # Update the conversation status (accept or decline)
   def update
-    # 1) Find the conversation
-    @conversations = Conversation.find(params[:id])
+    conversation = Conversation.find_by(id: params[:id])
 
-    # 2) Extract the new status (accepted or declined)
-    new_status = params[:status]
-
-    # 3) Check if the status is valid
-    if new_status.in?(%w[accepted declined])
-      # 4) Update the conversation in DB
-      @conversation.update!(status: new_status)
-
-      # 5) If accepted, update the conversation lists for both users
-      if new_status == "accepted"
-          broadcast_replace_to(
-            @conversation.sender,
-            target:  "conversations-list",
-            partial: "conversations/conversations_list",
-            locals:  {
-              conversations: accepted_conversations_for(@conversation.sender)
-            }
-          )
-
-          broadcast_replace_to(
-            @conversation.receiver,
-            target: "conversations-list",
-            partial: "conversations/conversations_list",
-            locals: {
-              conversations: accepted_conversations_for(@conversation.receiver)
-            }
-          )
-      end
-
-      # 6) In any case (accepted or declined), remove from pending requests for the current_user
-      broadcast_replace_to(
-        current_user,
-        target:  "pending-requests",
-        partial: "pending_requests",
-        locals:  { current_user: current_user }
-      )
-
-      # 7) Respond in Turbo Stream (if request is turbo) or redirect in HTML
+    if conversation.nil?
       respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to profile_path(current_user.profile) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "flash-messages",
+            partial: "shared/flash",
+            locals: { message: "Conversation not found", alert_type: :danger }
+          )
+        end
+        format.html { redirect_to conversations_path, alert: "Conversation not found" }
+      end
+      return
+    end
+
+    if conversation.update(status: params[:status])
+      # Broadcast to both sender and receiver
+      conversation.broadcast_status_change
+
+      respond_to do |format|
+        format.turbo_stream do
+          # No more dom_id(...)!
+          # We manually say: "conversation_#{conversation.id}"
+          render turbo_stream: turbo_stream.replace(
+            "conversation_#{conversation.id}",
+            partial: "conversations/conversation_status",
+            locals: { conversation: conversation }
+          )
+        end
+        format.html { redirect_to conversations_path, notice: "Conversation status updated." }
       end
     else
-      # If status is invalid => error
-      render json: { success: false, error: "Invalid status" }, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "flash-messages",
+            partial: "shared/flash",
+            locals: {
+              message: conversation.errors.full_messages.join(", "),
+              alert_type: :danger
+            }
+          )
+        end
+        format.html { redirect_to conversations_path, alert: "Failed to update conversation" }
+      end
     end
   end
 
   def show
-    # Optional: if you need a page to see the conversation details
     @conversation = Conversation.find(params[:id])
-    # Implement your logic to show messages, etc.
   end
 
   private
 
-  def accepted_conversations_for(user)
-    Conversation.where("(sender_id = :user_id OR receiver_id = :user_id) AND status = 'accepted'", user_id: user.id)
+  def conversation_params
+    params.require(:conversation).permit(:receiver_id)
   end
 end

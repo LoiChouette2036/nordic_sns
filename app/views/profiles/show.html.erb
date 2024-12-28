@@ -2,7 +2,7 @@
 
 <p><strong>Bio:</strong> <%= @profile.bio %></p>
 <p><strong>Patron Deity:</strong> <%= @profile.patron_deity %></p>
-<p><strong>Image:</strong></p>
+
 <% if @profile.image.present? %>
   <img src="<%= @profile.image %>" alt="<%= @profile.name %>'s image" style="max-width: 300px; height: auto;">
 <% else %>
@@ -15,8 +15,7 @@
 
 <hr>
 
-<h2>Pending Conversation Requests</h2>
-<turbo-frame id="pending-requests">
-  <!-- We render the partial that shows all pending requests for this user -->
-  <%= render "conversations/pending_requests" %>
-</turbo-frame>
+<div id="pending-requests">
+  <h2>Pending Conversation Requests</h2>
+  <!-- The pending_request partial is appended here by broadcast_to_receiver -->
+</div>

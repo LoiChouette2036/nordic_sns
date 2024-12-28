@@ -73,7 +73,7 @@ export default class extends Controller {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').textContent,
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
         },
         body: JSON.stringify({ receiver_id: userId }),
       })

@@ -1,0 +1,23 @@
+<li class="list-group-item">
+  <!-- A link to the conversation show page -->
+  <%= link_to "Conversation ##{conversation.id}", conversation_path(conversation) %>
+
+  <!-- Only show Accept/Decline if the conversation is still pending -->
+  <% if conversation.status == "pending" %>
+    <button 
+      data-controller="conversation"
+      data-conversation-id="<%= conversation.id %>"
+      data-action="conversation#accept"
+    >
+      Accept
+    </button>
+
+    <button
+      data-controller="conversation"
+      data-conversation-id="<%= conversation.id %>"
+      data-action="conversation#decline"
+    >
+      Decline
+    </button>
+  <% end %>
+</li>

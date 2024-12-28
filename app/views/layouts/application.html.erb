@@ -3,21 +3,10 @@
   <head>
     <title><%= content_for(:title) || "Nordic Sns" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
 
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -32,22 +21,14 @@
       <% end %>
     </div>
 
-    <nav id="main-nav">
-      <% if user_signed_in? %>
-        <p>Welcome, <%= current_user.email %>!</p>
-        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
-      <% else %>
-        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
-        <%= link_to "Login", new_user_session_path, class: "btn btn-secondary" %>
-      <% end %>
-    </nav>
-
-     <% if user_signed_in? %>
-      <!-- This line subscribes the current_user to Turbo Streams 
-          so broadcast_replace_to(current_user, ...) fonctionne. -->
+    <% if user_signed_in? %>
       <%= turbo_stream_from current_user %>
+      <p>Welcome, <%= current_user.email %>!</p>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+    <% else %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
+      <%= link_to "Login", new_user_session_path, class: "btn btn-secondary" %>
     <% end %>
-
 
     <%= yield %>
   </body>
