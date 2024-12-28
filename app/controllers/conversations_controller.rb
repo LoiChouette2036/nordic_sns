@@ -134,5 +134,3 @@ class ConversationsController < ApplicationController
     params.require(:conversation).permit(:receiver_id)
   end
 end
-
-# END app/controllers/conversations_controller.rb
