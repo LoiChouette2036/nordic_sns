@@ -1,4 +1,5 @@
-# app/controllers/conversations_controller.rb
+# BEGIN app/controllers/conversations_controller.rb
+
 class ConversationsController < ApplicationController
   before_action :authenticate_user!
   protect_from_forgery with: :exception
@@ -68,21 +69,44 @@ class ConversationsController < ApplicationController
     end
 
     if conversation.update(status: params[:status])
-      # Broadcast to both sender and receiver
-      conversation.broadcast_status_change
+      # -------------------------------------------------------
+      # ## CHANGE: We remove the pending request block from the user's profile
+      # in BOTH cases (accepted or declined).
+      # If declined, also destroy the conversation from DB.
+      # If accepted, we broadcast so it appears in /conversations index.
+      # -------------------------------------------------------
 
-      respond_to do |format|
-        format.turbo_stream do
-          # No more dom_id(...)!
-          # We manually say: "conversation_#{conversation.id}"
-          render turbo_stream: turbo_stream.replace(
-            "conversation_#{conversation.id}",
-            partial: "conversations/conversation_status",
-            locals: { conversation: conversation }
-          )
+      if conversation.status == "declined"
+        conversation.destroy
+        respond_to do |format|
+          format.turbo_stream do
+            # Remove the "pending-request-XX" block from the profile
+            render turbo_stream: turbo_stream.remove(
+              "pending-request-#{conversation.id}"  # ## CHANGE: Remove pending partial
+            )
+          end
+          format.html do
+            redirect_to conversations_path, notice: "Conversation declined and removed."
+          end
         end
-        format.html { redirect_to conversations_path, notice: "Conversation status updated." }
+
+      else
+        # If accepted, broadcast the status change
+        conversation.broadcast_status_change
+
+        respond_to do |format|
+          format.turbo_stream do
+            # Remove the "pending-request-XX" block from the profile
+            render turbo_stream: turbo_stream.remove(
+              "pending-request-#{conversation.id}"  # ## CHANGE: Remove pending partial
+            )
+          end
+          format.html do
+            redirect_to conversations_path, notice: "Conversation status updated."
+          end
+        end
       end
+
     else
       respond_to do |format|
         format.turbo_stream do
@@ -110,3 +134,5 @@ class ConversationsController < ApplicationController
     params.require(:conversation).permit(:receiver_id)
   end
 end
+
+# END app/controllers/conversations_controller.rb

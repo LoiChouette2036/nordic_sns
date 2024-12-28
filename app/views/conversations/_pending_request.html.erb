@@ -1,7 +1,14 @@
-<div data-controller="conversation"
-     data-conversation-id="<%= conversation.id %>"
-     data-conversation-target="request">
+<!-- BEGIN app/views/conversations/_pending_request.html.erb -->
+
+<div 
+  id="pending-request-<%= conversation.id %>"   
+  data-controller="conversation"
+  data-conversation-id="<%= conversation.id %>"
+  data-conversation-target="request"
+>
   <p><strong>Request from:</strong> <%= conversation.sender.email %></p>
   <button data-action="conversation#accept">Accept</button>
   <button data-action="conversation#decline">Decline</button>
 </div>
+
+<!-- END app/views/conversations/_pending_request.html.erb -->
