@@ -3,7 +3,7 @@
 
 <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
 
-<div id="messages-container" class="messages-container">
+<div id="messages-container" class="messages-container" data-controller="messages" data-messages-target="container">
     <div id="messages">
         <%= render @conversation.messages, current_user: current_user %>
     </div>
