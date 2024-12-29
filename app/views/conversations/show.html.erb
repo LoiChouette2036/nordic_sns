@@ -1,2 +1,19 @@
-<<h1>Conversation #<%= @conversation.id %></h1>
+<h1>Conversation #<%= @conversation.id %></h1>
 <p>Status: <%= @conversation.status %></p>
+
+<%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
+
+<div id="messages">
+    <%= render @conversation.messages %>
+</div>
+
+<%= form_with(model: [@conversation, Message.new], local: false, data: { controller: "message-form", action: "turbo:submit-end->message-form#reset" }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :content, "New message", class: "form-label" %>
+    <%= form.text_area :content, class: "form-control", row: 3, data: { message_form_target: "input" } %>
+  </div>
+  <%= form.submit "Send Message", class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to "Back to Conversations", conversations_path, class: "btn btn-secondary mb-3" %>
+

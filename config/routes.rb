@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       patch :accept
     end
+    resources :messages, only: :create
   end
 
   # Add search route for users
