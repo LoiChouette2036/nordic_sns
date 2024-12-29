@@ -3,8 +3,10 @@
 
 <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
 
-<div id="messages">
-    <%= render @conversation.messages %>
+<div id="messages-container" class="messages-container">
+    <div id="messages">
+        <%= render @conversation.messages, current_user: current_user %>
+    </div>
 </div>
 
 <%= form_with(model: [@conversation, Message.new], local: false, data: { controller: "message-form", action: "turbo:submit-end->message-form#reset" }) do |form| %>

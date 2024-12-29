@@ -2,9 +2,11 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def create
+    Rails.logger.debug "Current user: #{current_user.inspect}"
     @conversation = Conversation.find(params[:conversation_id])
     @message = @conversation.messages.build(message_params)
     @message.user = current_user
+    @current_user = current_user
 
     if @message.save
       respond_to do |format|

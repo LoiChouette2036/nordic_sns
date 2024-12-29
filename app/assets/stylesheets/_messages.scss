@@ -1,0 +1,25 @@
+.messages-container {
+    height: 400px; /* Fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Add a border to visually separate the container */
+    padding: 10px; /* Optional: Add padding for better spacing */
+    background-color: #f9f9f9; /* Optional: Light background for contrast */
+}
+
+.message {
+    padding: 10px; /* Add space around the text */
+    margin-bottom: 10px; /* Add space between messages */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #ffffff; /* White background for messages */
+    border: 1px solid #ddd; /* Light border for separation */
+}
+
+.user-message {
+    background-color: #e6f7ff; /* Light blue for the current user's messages */
+    text-align: right; /* Align to the right */
+}
+
+.other-message {
+    background-color: #f7f7f7; /* Light gray for other users' messages */
+    text-align: left; /* Align to the left */
+}
