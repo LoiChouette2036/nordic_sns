@@ -6,6 +6,8 @@ class Conversation < ApplicationRecord
   validate :sender_and_receiver_must_be_different
   validate :conversation_uniqueness, on: :create
 
+  has_many :messages, dependent: :destroy
+
   # This broadcasts a new "pending" request to the receiver
   def broadcast_to_receiver
     broadcast_append_to(
