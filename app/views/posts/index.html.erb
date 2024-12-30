@@ -1,11 +1,27 @@
-<h1>Post</h1>
+<div class="container mt-5">
+  <h1>Post</h1>
 
-<%= render "posts/form", post: @post %>
+  <div class="row">
+    <!-- Post Creation Form -->
+    <div class="col-12">
+      <div class="card p-3 mb-3">
+        <h5 class="card-title">Create a New Post</h5>
+        <%= render "posts/form", post: @post %>
+      </div>
+    </div>
+  </div>
 
-<div id="posts">
-  <% @posts.each do |post| %>
-    <%= render "posts/post", post: post %>
-  <% end %>
+  <div class="row">
+    <!-- Posts List -->
+    <div class="col-12">
+      <div class="card p-3" style="max-height: 500px; overflow-y: auto;" id="posts">
+        <% @posts.each do |post| %>
+          <%= render "posts/post", post: post %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Return to Profile Link -->
+  <%= link_to "Return to profile", profile_path, class: "btn btn-secondary mt-3" %>
 </div>
-
-<%= link_to "Return to profile", profile_path %>
