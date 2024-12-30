@@ -4,9 +4,21 @@
 <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
 
 <div id="messages-container" class="messages-container" data-controller="messages" data-messages-target="container">
-    <div id="messages">
-        <%= render @conversation.messages, current_user: current_user %>
+  <!-- Load Older Messages Button -->
+  <% if @pagy.pages > 1 %>
+    <div id="load-more">
+      <%= link_to "Load older messages",
+                  conversation_path(@conversation, page: @pagy.next),
+                  remote: true,
+                  class: "btn btn-secondary mb-3",
+                  id: "load-more-button",
+                  data: { action: "click->messages#loadMore", messages_target: "loadMoreButton" } %>
     </div>
+  <% end %>
+  
+  <div id="messages">
+      <%= render @messages.reverse, current_user: current_user %>
+  </div>
 </div>
 
 <%= form_with(model: [@conversation, Message.new], local: false, data: { controller: "message-form", action: "turbo:submit-end->message-form#reset" }) do |form| %>

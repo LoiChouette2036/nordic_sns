@@ -1,6 +1,7 @@
 # BEGIN app/controllers/conversations_controller.rb
 
 class ConversationsController < ApplicationController
+  include Pagy::Backend
   before_action :authenticate_user!
   protect_from_forgery with: :exception
 
@@ -126,6 +127,18 @@ class ConversationsController < ApplicationController
 
   def show
     @conversation = Conversation.find(params[:id])
+    @pagy, @messages = pagy(@conversation.messages.order(created_at: :desc))
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.prepend(
+          "messages", # Prepend messages to the "messages" container
+          partial: "messages/message",
+          collection: @messages,
+          locals: { current_user: current_user }
+        ) + (turbo_stream.remove("load-more") if @pagy.next.nil?) # Remove button if no more pages
+      end
+    end
   end
 
   private
