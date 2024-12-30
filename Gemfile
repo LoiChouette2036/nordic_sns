@@ -69,3 +69,5 @@ gem "devise"
 gem "sassc-rails"
 
 gem "bootstrap"
+
+gem "pagy"
