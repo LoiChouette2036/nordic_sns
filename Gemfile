@@ -71,3 +71,5 @@ gem "sassc-rails"
 gem "bootstrap"
 
 gem "pagy"
+
+gem "kaminari"
