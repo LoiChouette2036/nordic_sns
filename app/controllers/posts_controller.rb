@@ -6,6 +6,13 @@ class PostsController < ApplicationController
     @posts = Post.where(parent_post_id: nil) # Top-level posts only
                  .includes(:replies, :user) # Preload replies and users
                  .order(created_at: :desc)
+                 .page(params[:page]) # Add pagination
+                 .per(50) # 50 posts per page
+
+    respond_to do |format|
+      format.html # standard full-page load
+      format.turbo_stream # Handles turbo stream requests
+    end
   end
 
   def create
@@ -16,7 +23,7 @@ class PostsController < ApplicationController
         if @post.parent_post_id.present? # check if it s a comment
           format.turbo_stream do
             render turbo_stream: [
-              turbo_stream.append(
+              turbo_stream.prepend(
                 "comments_#{@post.parent_post_id}",
                 partial: "posts/comment",
                 locals: { comment: @post }

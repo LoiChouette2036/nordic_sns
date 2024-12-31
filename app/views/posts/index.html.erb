@@ -14,14 +14,22 @@
   <div class="row">
     <!-- Posts List -->
     <div class="col-12">
-      <div class="card p-3" style="max-height: 500px; overflow-y: auto;" id="posts">
-        <% @posts.each do |post| %>
-          <%= render "posts/post", post: post %>
+      <%= turbo_frame_tag "posts" do %>
+        <div class="card p-3" style="max-height: 500px; overflow-y: auto;" id="location-posts">
+          <% @posts.each do |post| %>
+            <%= render "posts/post", post: post %>
+          <% end %>
+
+          <% if @posts.next_page %>
+          <div id="posts_load_more" class="text-center mt-3">
+            <%= link_to "Load More", posts_path(page: @posts.next_page, format: :turbo_stream), data: { turbo_frame: "posts" }, class: "btn btn-primary" %>
+          </div>
         <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 
   <!-- Return to Profile Link -->
-  <%= link_to "Return to profile", profile_path, class: "btn btn-secondary mt-3" %>
+  <%= link_to "Return to profile", profile_path, class: "btn btn-secondary mt-3", id: "load-more-button" %>
 </div>
