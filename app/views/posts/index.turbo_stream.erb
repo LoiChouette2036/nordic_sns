@@ -1,15 +1,18 @@
 <% @posts.each do |post| %>
-    <%= turbo_stream.append "location-posts" do %>
-        <%= render "posts/post", post: post %>
-    <% end %>
+  <%= turbo_stream.append "location-posts" do %>
+    <%= render "posts/post", post: post %>
+  <% end %>
 <% end %>
 
 <% if @posts.next_page %>
-    <%= turbo_stream.replace "posts_load_more" do %>
-        <div id="posts_load_more" class="text-center mt-3">
-            <%= link_to "Load More", posts_path(page: @posts.next_page, format: :turbo_stream), data: { turbo_frame: "location-posts" }, class: "btn btn-primary" %>
-        </div>
-    <% end %>
+  <%= turbo_stream.replace "posts_load_more" do %>
+    <div id="posts_load_more" class="text-center mt-3" data-controller="load-more">
+      <%= link_to "Load More", posts_path(page: @posts.next_page, format: :turbo_stream), 
+                  data: { turbo_frame: "posts", turbo: "false" }, 
+                  class: "btn btn-primary", 
+                  aria: { label: "Load more posts" } %>
+    </div>
+  <% end %>
 <% else %>
-    <%= turbo_stream.remove "posts_load_more" %>
+  <%= turbo_stream.remove "posts_load_more" %>
 <% end %>

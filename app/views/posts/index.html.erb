@@ -1,3 +1,5 @@
+<!-- app/views/posts/index.html.erb -->
+
 <div class="container mt-5">
   <h1>Post</h1>
 
@@ -19,17 +21,22 @@
           <% @posts.each do |post| %>
             <%= render "posts/post", post: post %>
           <% end %>
+        </div>
 
-          <% if @posts.next_page %>
-          <div id="posts_load_more" class="text-center mt-3">
-            <%= link_to "Load More", posts_path(page: @posts.next_page, format: :turbo_stream), data: { turbo_frame: "posts" }, class: "btn btn-primary" %>
+        <% if @posts.next_page %>
+          <!-- Bouton "Load More" placé en dehors du conteneur des messages -->
+          <div id="posts_load_more" class="text-center mt-3" data-controller="load-more">
+            <%= link_to "Load More", posts_path(page: @posts.next_page, format: :turbo_stream), 
+                        data: { turbo_frame: "posts", turbo: "false" }, 
+                        class: "btn btn-primary", 
+                        id: "load-more-button", 
+                        aria: { label: "Load more posts" } %>
           </div>
         <% end %>
-        </div>
       <% end %>
     </div>
   </div>
 
   <!-- Return to Profile Link -->
-  <%= link_to "Return to profile", profile_path, class: "btn btn-secondary mt-3", id: "load-more-button" %>
+  <%= link_to "Return to profile", profile_path, class: "btn btn-secondary mt-3", id: "return-to-profile-button" %>
 </div>
