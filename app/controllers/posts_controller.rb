@@ -7,7 +7,7 @@ class PostsController < ApplicationController
                  .includes(:replies, :user) # Preload replies and users
                  .order(created_at: :desc)
                  .page(params[:page]) # Add pagination
-                 .per(50) # 50 posts per page
+                 .per(20) # 50 posts per page
 
     respond_to do |format|
       format.html # standard full-page load

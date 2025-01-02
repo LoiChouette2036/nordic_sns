@@ -1,5 +1,7 @@
+<!-- app/views/likes/_like_button.html.erb -->
+
 <% if post.likes.exists?(user: current_user) %>
-  <%= button_to "Unlike", like_path(post.likes.find_by(user: current_user)), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
+  <%= button_to "Unlike", like_path(post.likes.find_by(user: current_user), post_id: post.id), method: :delete, class: "btn btn-danger btn-sm", data: { turbo_confirm: "Are you sure you want to unlike this post?" } %>
 <% else %>
-  <%= button_to "Like", post_likes_path(post), method: :post, remote: true, class: "btn btn-primary btn-sm" %>
+  <%= button_to "Like", post_likes_path(post), method: :post, class: "btn btn-primary btn-sm" %>
 <% end %>

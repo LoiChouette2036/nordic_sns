@@ -1,3 +1,5 @@
+<!-- app/views/likes/create.turbo_stream.erb -->
+
 <%= turbo_stream.replace "like_button_#{@post.id}" do %>
   <%= render "likes/like_button", post: @post %>
 <% end %>
