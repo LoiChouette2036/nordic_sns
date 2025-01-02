@@ -1,0 +1,5 @@
+<% if post.likes.exists?(user: current_user) %>
+  <%= button_to "Unlike", like_path(post.likes.find_by(user: current_user)), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
+<% else %>
+  <%= button_to "Like", post_likes_path(post), method: :post, remote: true, class: "btn btn-primary btn-sm" %>
+<% end %>

@@ -3,6 +3,17 @@
     <h6 class="card-subtitle mb-2 text-muted"><%= post.user.email %></h6>
     <p class="card-text"><%= post.content %></p>
     <small class="text-muted"><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
+    
+    <!-- Like Button and Count -->
+    <div id="like_button_<%= post.id %>">
+      <%= render "likes/like_button", post: post %>
+    </div>
+    <turbo-frame id="like_count_<%= post.id %>">
+      <p class="text-muted mt-1">
+        <%= pluralize(post.likes.count, "like") %>
+      </p>
+    </turbo-frame>
+    
     <div class="mt-2">
       <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_<%= post.id %>" aria-controls="offcanvas_<%= post.id %>">
         Comment

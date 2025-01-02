@@ -3,5 +3,15 @@
     <h6 class="card-subtitle mb-1 text-muted"><%= comment.user.email %></h6>
     <p class="card-text"><%= comment.content %></p>
     <small class="text-muted"><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
+
+    <!-- Like Button and Count -->
+    <div id="like_button_<%= comment.id %>">
+      <%= render "likes/like_button", post: comment %>
+    </div>
+    <turbo-frame id="like_count_<%= comment.id %>">
+      <p class="text-muted mt-1">
+        <%= pluralize(comment.likes.count, "like") %>
+      </p>
+    </turbo-frame>
   </div>
 </div>

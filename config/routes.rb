@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
   root "pages#home"
   resource :profile, only: [ :new, :create, :edit, :update, :show ]
-  resources :posts, only: [ :index, :create, :show ]
+  resources :posts, only: [ :index, :create, :show ] do
+    resources :likes, only: [ :create, :destroy ], shallow: true
+  end
   resources :conversations do
     member do
       patch :accept
