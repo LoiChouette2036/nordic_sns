@@ -4,16 +4,22 @@
     <p class="card-text"><%= post.content %></p>
     <small class="text-muted"><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
     
-    <!-- Like Button and Count -->
-    <div id="like_button_<%= post.id %>">
-      <%= render "likes/like_button", post: post %>
+    <!-- Section des likes -->
+    <div id="post_<%= post.id %>_likes">
+      <%= post.likes.count %> Likes
+      <% like = current_user.likes.find_by(post: post) %>
+      <% if like.nil? %>
+        <%= button_to "Like", post_likes_path(post), method: :post, params: { like: { post_id: post.id } }, 
+                      class: "btn btn-primary btn-sm", 
+                      data: { turbo_stream: true } %>
+      <% else %>
+        <%= button_to "Unlike", post_like_path(post, like), method: :delete, 
+                      class: "btn btn-danger btn-sm", 
+                      data: { turbo_stream: true, confirm: "Are you sure to delete your like?" } %>
+      <% end %>
     </div>
-    <turbo-frame id="like_count_<%= post.id %>">
-      <p class="text-muted mt-1">
-        <%= pluralize(post.likes.count, "like") %>
-      </p>
-    </turbo-frame>
-    
+
+    <!-- Section des commentaires -->
     <div class="mt-2">
       <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_<%= post.id %>" aria-controls="offcanvas_<%= post.id %>">
         Comment

@@ -1,11 +1,1 @@
-<!-- app/views/likes/destroy.turbo_stream.erb -->
-
-<%= turbo_stream.replace "like_button_#{@post.id}" do %>
-  <%= render "likes/like_button", post: @post %>
-<% end %>
-
-<%= turbo_stream.replace "like_count_#{@post.id}" do %>
-  <p class="text-muted mt-1">
-    <%= pluralize(@post.likes.count, "like") %>
-  </p>
-<% end %>
+<%= turbo_stream.replace "post_#{@post.id}_likes", partial: "posts/likes", locals: { post: @post } %>

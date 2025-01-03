@@ -1,0 +1,13 @@
+<div id="post_<%= post.id %>_likes">
+  <%= post.likes.count %> Likes
+  <% like = current_user.likes.find_by(post: post) %>
+  <% if like.nil? %>
+    <%= button_to "Like", post_likes_path(post), method: :post, params: { like: { post_id: post.id } }, 
+                  class: "btn btn-primary btn-sm", 
+                  data: { turbo_stream: true } %>
+  <% else %>
+    <%= button_to "Unlike", post_like_path(post, like), method: :delete, 
+                  class: "btn btn-danger btn-sm", 
+                  data: { turbo_stream: true, confirm: "Are you sure to delete your like?" } %>
+  <% end %>
+</div>

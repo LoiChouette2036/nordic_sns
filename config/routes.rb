@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root "pages#home"
   resource :profile, only: [ :new, :create, :edit, :update, :show ]
   resources :posts, only: [ :index, :create, :show ] do
-    resources :likes, only: [ :create, :destroy ], shallow: true
+    resources :likes, only: [ :create, :destroy ]
   end
   resources :conversations do
     member do
