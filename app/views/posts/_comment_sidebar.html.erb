@@ -20,8 +20,8 @@
 
     <!-- Comments List -->
     <div id="comments_<%= post.id %>" class="comments-list">
-      <% post.replies.each do |comment| %>
-        <%= render "posts/comment", comment: comment %>
+      <% post.replies.each do |reply| %>
+        <%= render "posts/post", post: reply %>
       <% end %>
     </div>
   </div>
