@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Products</h1>
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <% if product.image.attached? %>
+            <%= image_tag product.image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+          <% else %>
+            <%= image_tag "placeholder.jpg", class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= product.title %></h5>
+            <p class="card-text"><%= truncate(product.description, length: 100) %></p>
+            <p class="card-text"><strong>Price:</strong> $<%= product.price %></p>
+            <p class="card-text"><strong>Quantity:</strong> <%= product.quantity %></p>
+            <%= link_to "View Product", product_path(product), class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to "Create Product", new_product_path, class: "btn btn-success" %>
+
