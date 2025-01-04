@@ -11,11 +11,4 @@ Rails.application.routes.draw do
     end
     resources :messages, only: :create
   end
-
-  # Add search route for users
-  get "/users/search", to: "users#search"
-
-  get "/test_turbo_stream", to: "profiles#test_turbo_stream"
-
-  get "test_broadcast", to: "profiles#test_broadcast"
 end
