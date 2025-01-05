@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_04_002905) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_04_224837) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -70,6 +70,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_04_002905) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.string "status"
+    t.decimal "total_price", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.integer "parent_post_id"
@@ -119,6 +130,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_04_002905) do
   add_foreign_key "likes", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
+  add_foreign_key "orders", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "products", "users"
   add_foreign_key "profiles", "users"

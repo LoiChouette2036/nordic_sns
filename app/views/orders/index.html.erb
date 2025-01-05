@@ -1,0 +1,16 @@
+<h1>Your Orders</h1>
+
+<% if @orders.any? %>
+  <ul>
+    <% @orders.each do |order| %>
+      <li>
+        <%= link_to order.product.title, order_path(order) %>
+        - <%= order.status.capitalize %>
+        - $<%= order.total_price %>
+        - Ordered on <%= order.created_at.strftime("%B %d, %Y") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You have no orders yet.</p>
+<% end %>

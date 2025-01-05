@@ -1,0 +1,9 @@
+<h1>Order Details</h1>
+
+<p><strong>Product:</strong> <%= @order.product.title %></p>
+<p><strong>Description:</strong> <%= @order.product.description %></p>
+<p><strong>Status:</strong> <%= @order.status.capitalize %></p>
+<p><strong>Total Price:</strong> $<%= @order.total_price %></p>
+<p><strong>Order Date:</strong> <%= @order.created_at.strftime("%B %d, %Y") %></p>
+
+<%= link_to "Back to Orders", orders_path, class: "btn btn-secondary" %>

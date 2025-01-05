@@ -46,6 +46,29 @@ class ProductsController < ApplicationController
     end
   end
 
+  def create_checkout_session
+    product = Product.find(params[:id])
+
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: [ "card" ],
+      line_items: [ {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: product.title
+          },
+          unit_amount: (product.price * 100).to_i # Stripe expects the amount in cents
+        },
+        quantity: 1
+      } ],
+      mode: "payment",
+      success_url: checkout_success_url, # Redirect after a successful payment
+      cancel_url: checkout_cancel_url    # Redirect if the user cancels the payment
+    )
+
+    redirect_to session.url, allow_other_host: true
+  end
+
   private
 
   def product_params

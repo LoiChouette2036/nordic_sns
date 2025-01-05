@@ -73,3 +73,7 @@ gem "bootstrap"
 gem "pagy"
 
 gem "kaminari"
+
+gem "stripe"
+
+gem "dotenv-rails", groups: [ :development, :test ]

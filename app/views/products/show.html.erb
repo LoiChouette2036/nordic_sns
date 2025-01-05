@@ -13,6 +13,7 @@
       <p><strong>Price:</strong> $<%= @product.price %></p>
       <p><strong>Quantity Available:</strong> <%= @product.quantity %></p>
       <%= link_to "Edit Product", edit_product_path(@product), class: "btn btn-warning" %>
+      <%= button_to "Buy Now", create_checkout_session_product_path(@product), method: :post, class: "btn btn-primary", data: { turbo: false } %>
       <%= button_to "Delete Product", 
               product_path(@product), 
               method: :delete, 
