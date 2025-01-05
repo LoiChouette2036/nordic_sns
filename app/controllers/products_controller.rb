@@ -63,7 +63,11 @@ class ProductsController < ApplicationController
       } ],
       mode: "payment",
       success_url: checkout_success_url, # Redirect after a successful payment
-      cancel_url: checkout_cancel_url    # Redirect if the user cancels the payment
+      cancel_url: checkout_cancel_url,    # Redirect if the user cancels the payment
+      metadata: {
+        product_id: product.id, # Add the product ID
+        user_id: current_user.id # Add the user ID
+      }
     )
 
     redirect_to session.url, allow_other_host: true

@@ -45,14 +45,20 @@ class WebhooksController < ApplicationController
 
   # This method processes the checkout session when payment is completed
   def handle_checkout_session(session)
-    # TODO: Implement order creation here.
-    # Example:
-    # 1. Find the user (if authenticated or using session data).
-    # 2. Find the product(s) purchased.
-    # 3. Create an Order record in the database.
-    # 4. Send an email confirmation to the user.
+    # find the product and user based on the session metadata
+    product = Product.find_by(id: session.metadata.product_id)
+    user = User.find_by(id: session.metadata.user_id)
 
-    # For now, you can log the session to understand what it contains:
-    Rails.logger.info("Checkout session completed: #{session.inspect}")
+    # Create an order only if both are valid
+    if product && user
+      Order.create!(
+        user: user,
+        product: product,
+        total_price: session.amount_total / 100.0, # Stripe gives amount in cents
+        status: "paid"
+      )
+    else
+      Rails.logger.error "Invalid product or user for session: #{session.id}"
+    end
   end
 end
