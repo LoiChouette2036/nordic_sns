@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Nordic Sns" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <!-- Use a special body class to target home layout styling in CSS -->
+  <body class="home-body">
+    <!-- Flash messages (if any) -->
+    <div id="flash-messages">
+      <% flash.each do |key, message| %>
+        <div class="alert <%= key == 'notice' ? 'alert-success' : 'alert-danger' %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Yield the main content of the home page -->
+    <%= yield %>
+  </body>
+</html>

@@ -1,5 +1,15 @@
-<h1>Welcome to Nordic SNS</h1>
-<p>This is the home page of your app.</p>
-<div data-controller="test">
-  <h2>Check your console!</h2>
+<div class="content">
+  <h1>Yggdrasil Realm</h1>
+  <p>Step into the realm of gods and legends, where every tale matters.</p>
+
+  <!-- Show sign-up / login here if user is not signed in -->
+  <% if !user_signed_in? %>
+    <div class="custom-auth-buttons">
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn" %>
+      <%= link_to "Login", new_user_session_path, class: "btn" %>
+    </div>
+  <% else %>
+    <!-- If already logged in, you can show whatever you prefer here -->
+    <h2>Welcome back, <%= current_user.email %>!</h2>
+  <% end %>
 </div>
