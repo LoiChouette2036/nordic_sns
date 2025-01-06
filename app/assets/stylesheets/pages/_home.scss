@@ -1,7 +1,42 @@
-.home-body {
+@font-face {
+    font-family: 'Viking';
+    src: asset-url('Viking.ttf') format('truetype'); /* Reference the Viking font */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'EnthronedArchery';
+    src: asset-url('EnthronedArchery-Regular.ttf') format('truetype'); /* Reference Enthroned Archery font */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'NorseKaWl';
+    src: asset-url('Norse-KaWl.otf') format('opentype'); /* Reference Norse KaWl font */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'NorseBold';
+    src: asset-url('NorseBold-2Kge.otf') format('opentype'); /* Reference Norse Bold font */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'OdinsSpearRaggedHollow';
+    src: asset-url('OdinsSpearRaggedHollow-Pq8B.ttf') format('truetype'); /* Reference Odin's Spear Ragged Hollow font */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  .home-body {
     margin: 0;
     padding: 0;
-    min-height: 100vh; /* full screen */
+    min-height: 100vh; /* Full screen */
     background: url(asset-path('backgroundconverted3.jpg')) no-repeat center center fixed;
     background-size: cover;
     display: flex;
@@ -13,41 +48,49 @@
     text-align: center;
   
     .content {
+        margin-top: 200px;
       h1 {
-        font-size: 3.5rem;
+        font-family: 'NorseKaWl'; /* Apply Viking font to the title */
+        font-size: 4.5rem; /* Slightly larger font size for emphasis */
         margin-bottom: 20px;
-        color: #FFD700;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+        color: #FFD700; /* Golden color */
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(255, 215, 0, 0.7); /* Enhanced glow and depth */
+        letter-spacing: 2px; /* Increased spacing for a grander look */
       }
+  
       p {
-        font-size: 1.5rem;
-        color: #FFD700;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+        font-family: 'Libre Baskerville';
+        font-size: 1.8rem; /* Slightly larger slogan font size */
+        color: rgba(255, 235, 153, 0.9); /* Softer yellow for the slogan */
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7); /* Subtle shadow for readability */
         margin-top: 0;
+        max-width: 700px; /* Limit the slogan's width for better readability */
       }
     }
   
     .custom-auth-buttons {
-      margin-top: 40px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-  
-      .btn {
-        padding: 12px 25px;
-        font-size: 1.2rem;
+        margin-top: 30px; /* Create a gap between the slogan and buttons */
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 153px;
+        gap: 115px;
+      }
+      
+      .custom-auth-buttons .btn {
+        padding: 14px 30px;
+        font-size: 1.3rem;
         text-decoration: none;
         color: white;
-        background: rgba(255,215,0,0.8);
+        background: linear-gradient(90deg, #d4af37, #ffd700); /* Gradient gold */
+        border: 2px solid #a67c00; /* Subtle darker border */
         border-radius: 10px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-        transition: background 0.3s, transform 0.2s ease;
-  
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); /* Subtle shadow */
+        transition: background 0.3s ease, transform 0.2s ease;
+      
         &:hover {
-          background: rgba(255,215,0,1);
-          transform: translateY(-5px);
+          background: linear-gradient(90deg, #b8860b, #ffd700); /* Darker hover effect */
+          transform: scale(1.05); /* Slight zoom effect */
         }
       }
-    }
   }
   
