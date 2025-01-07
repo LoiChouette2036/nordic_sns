@@ -1,0 +1,33 @@
+<% unless current_page?(new_user_session_path) || current_page?(new_user_registration_path) %>
+  <div class="auth-buttons">
+    <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
+    <%= link_to "Login", new_user_session_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<div class="login-card">
+  <h2>LOG IN</h2>
+  <%= form_with(scope: :user, url: session_path(:user), local: true) do |form| %>
+    <div class="mb-3">
+      <%= form.label :email, "Email", class: "form-label" %>
+      <%= form.email_field :email, autofocus: true, class: "form-control", placeholder: "Enter your email" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :password, "Password", class: "form-label" %>
+      <%= form.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Enter your password" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.check_box :remember_me, class: "form-check-input" %>
+      <%= form.label :remember_me, "Remember me", class: "form-check-label" %>
+    </div>
+
+    <%= form.submit "Log in", class: "btn btn-warning" %>
+  <% end %>
+
+  <div class="mt-3 text-center">
+    <%= link_to "Sign up", new_user_registration_path %> |
+    <%= link_to "Forgot your password?", new_user_password_path %>
+  </div>
+</div>

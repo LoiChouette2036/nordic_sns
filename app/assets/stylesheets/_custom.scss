@@ -1,0 +1,27 @@
+@import "variables";
+// app/assets/stylesheets/_custom.scss
+// Global styles (utilisé partout)
+body {
+    font-family: $body-font;
+    color: $text-color;
+    background-color: $background-color;
+  }
+  
+  // Boutons globaux
+  .btn {
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-primary {
+    background-color: $primary-color;
+    border: none;
+    color: #000;
+  }
+  
+  .btn-primary:hover {
+    background-color: lighten($primary-color, 10%);
+    transform: scale(1.05);
+  }

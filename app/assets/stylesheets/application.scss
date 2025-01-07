@@ -1,5 +1,29 @@
+@import "variables";
 @import "bootstrap";
 @import "custom"; 
 @import "font-awesome";
 @import "messages";
 @import "pages/home";
+@import "pages/login";
+
+
+// Global styles
+body {
+    background-color:  #1A1A40;
+    color: #F5F5F5;
+    font-family: $body-font;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $heading-font;
+    color: $primary-color;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+p {
+    font-family: $body-font;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
