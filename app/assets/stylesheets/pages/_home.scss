@@ -51,7 +51,7 @@
       margin-top: 200px;
     h1 {
       font-family: 'NorseKaWl'; /* Apply Viking font to the title */
-      font-size: 4.5rem; /* Slightly larger font size for emphasis */
+      font-size: 5rem; /* Slightly larger font size for emphasis */
       margin-bottom: 20px;
       color: #FFD700; /* Golden color */
       text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8), 0 0 12px rgba(255, 215, 0, 0.7); /* Enhanced glow and depth */
@@ -109,3 +109,4 @@
   z-index: 2; /* Ensure content stays above the canvas */
   position: relative; /* Needed for z-index to take effect */
 }
+
