@@ -186,3 +186,77 @@
     }
   }
 }
+
+/*****************************************
+ * Offcanvas Dark Mode
+ *****************************************/
+ .offcanvas.offcanvas-end {
+  /* Force a darker background for entire offcanvas */
+  background-color: #1E1E1E !important;
+
+  /* If you want the header the same color */
+  .offcanvas-header {
+    background-color: #1E1E1E !important;
+    color: #F5F5F5;
+    
+    .btn-close {
+      filter: invert(100%); /* Make the close icon visible on dark bg */
+    }
+  }
+
+  /* The main body */
+  .offcanvas-body {
+    background-color: #1E1E1E !important;
+    color: #F5F5F5;
+
+    /* Override card backgrounds inside the offcanvas */
+    .card {
+      background-color:  rgba(0, 0, 0, 0.25);
+      color: #F5F5F5;
+      border: 1px solid #333; /* Subtle border */
+      margin-bottom: 1rem;
+      
+      .card-body {
+        background-color: rgba(0, 0, 0, 0.25);
+        color: #F5F5F5;
+      }
+    }
+
+    .form-control {
+      background-color: #2C2C2C;
+      color: #F5F5F5;
+      border: 1px solid #666;
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(255,215,0,0.8);
+      }
+    }
+
+    /* Buttons in the offcanvas */
+    .btn-primary.btn-sm {
+      background-color: #FFD700; /* Gold */
+      border: none;
+      color: #000;
+      font-weight: bold;
+      &:hover {
+        background-color: lighten(#FFD700, 10%);
+      }
+    }
+
+    .btn-danger.btn-sm {
+      background-color: #e74c3c;
+      border: none;
+      &:hover {
+        background-color: lighten(#e74c3c, 10%);
+      }
+    }
+  }
+}
+
+.post-label {
+  color: #FFD700 !important; /* gold */
+}
+
+.post-label-date {
+  color: white !important;
+}
