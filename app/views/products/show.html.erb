@@ -16,21 +16,21 @@
       <p><strong>Price:</strong> $<%= @product.price %></p>
       <p><strong>Quantity Available:</strong> <%= @product.quantity %></p>
 
-      <!-- Wrap the buttons in a container for spacing & styling -->
       <div class="product-buttons">
-        <%= link_to "Edit Product", edit_product_path(@product), class: "btn btn-warning" %>
+        <!-- Only show Edit/Delete if current_user == @product.user -->
+        <% if @product.user == current_user %>
+          <%= link_to "Edit Product", edit_product_path(@product), class: "btn btn-warning" %>
+          <%= button_to "Delete Product", product_path(@product),
+                        method: :delete,
+                        data: { confirm: "Are you sure you want to delete this product?" },
+                        class: "btn btn-danger" %>
+        <% end %>
 
-        <!-- Keep the EXACT logic for Buy Now -->
-        <%= button_to "Buy Now", create_checkout_session_product_path(@product), 
-                      method: :post, 
-                      class: "btn btn-primary", 
+        <!-- "Buy Now" is presumably visible to everyone, so keep it outside the check -->
+        <%= button_to "Buy Now", create_checkout_session_product_path(@product),
+                      method: :post,
+                      class: "btn btn-primary",
                       data: { turbo: false } %>
-
-        <!-- Keep the EXACT logic for Delete Product -->
-        <%= button_to "Delete Product", product_path(@product),
-                      method: :delete,
-                      data: { confirm: "Are you sure you want to delete this product?" },
-                      class: "btn btn-danger" %>
 
         <%= link_to "Back to Products", products_path, class: "btn btn-secondary back-to-products-btn" %>
       </div>

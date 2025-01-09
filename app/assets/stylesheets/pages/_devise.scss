@@ -1,0 +1,68 @@
+@import "variables"; // So we can use $primary-color, etc.
+
+.signup-container {
+  width: 80%;
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: darken($accent-color, 2%);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  color: $text-color;
+
+  h1 {
+    font-family: $heading-font;
+    font-size: 2rem;
+    color: $primary-color; // gold
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: $primary-color;
+    font-family: $heading-font;
+    margin-bottom: 0.25rem;
+  }
+
+  .form-control {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid $primary-color;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(255,215,0,0.8);
+    }
+  }
+
+  .btn.btn-warning {
+    background-color: $primary-color;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 0.5rem 1rem;
+    &:hover {
+      background-color: lighten($primary-color, 10%);
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Devise links for sign in / sign up, etc. */
+  .actions.mb-3 {
+    text-align: center;
+  }
+
+  a {
+    color: $primary-color;
+    font-weight: bold;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

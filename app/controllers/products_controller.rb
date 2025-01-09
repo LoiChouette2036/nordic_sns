@@ -1,10 +1,11 @@
 class ProductsController < ApplicationController
+  before_action :set_product, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_product_owner, only: [ :edit, :update, :destroy ]
   def index
     @products = Product.all
   end
 
   def show
-    @product = Product.find(params[:id])
   end
 
   def new
@@ -24,11 +25,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
   end
 
   def update
-    @product = Product.find(params[:id])
     if @product.update(product_params)
       redirect_to product_path(@product), notice: "Product updated successfully!"
     else
@@ -38,7 +37,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:id])
     if @product.destroy
       redirect_to products_path, notice: "Product was successfully deleted."
     else
@@ -74,6 +72,16 @@ class ProductsController < ApplicationController
   end
 
   private
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def authorize_product_owner
+    unless @product.user == current_user
+      redirect_to products_path, alert: "You are not authorized to modify this product."
+    end
+  end
 
   def product_params
     params.require(:product).permit(:title, :description, :price, :quantity, :image)

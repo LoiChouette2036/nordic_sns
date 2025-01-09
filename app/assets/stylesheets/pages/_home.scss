@@ -110,3 +110,23 @@
   position: relative; /* Needed for z-index to take effect */
 }
 
+.logout-btn {
+  padding: 14px 30px;
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(90deg, #d4af37, #ffd700); /* Gradient gold */
+  border: 2px solid #a67c00; /* Subtle darker border */
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4); /* Subtle shadow */
+  transition: background 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background: linear-gradient(90deg, #b8860b, #ffd700); /* Darker hover effect */
+    transform: scale(1.05); /* Slight zoom effect */
+  }
+}
+
+.link-profile {
+  color: #d4af37;
+}

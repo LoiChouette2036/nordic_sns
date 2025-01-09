@@ -1,4 +1,4 @@
-<%= form_with model: @profile, url: profile_path, local: true, class: "needs-validation" do |f| %>
+<%= form_with model: @profile, url: profile_path, local: true do |f| %>
   <div class="mb-3">
     <%= f.label :name, class: "form-label" %>
     <%= f.text_field :name, class: "form-control", placeholder: "Enter your name" %>
@@ -15,10 +15,9 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :image, class: "form-label" %>
-    <%= f.text_field :image, class: "form-control", placeholder: "Enter image URL (optional)" %>
+    <%= f.label :image, "Upload Image", class: "form-label" %>
+    <%= f.file_field :image, class: "form-control" %>
   </div>
-
 
   <div class="mb-3">
     <%= f.submit "Save Profile", class: "btn btn-primary" %>

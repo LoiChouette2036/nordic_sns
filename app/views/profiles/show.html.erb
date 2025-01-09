@@ -1,8 +1,8 @@
 <div class="profile-container">
   <div class="profile-header">
     <div class="profile-image-wrapper">
-      <% if @profile.image.present? %>
-        <img src="<%= @profile.image %>" alt="<%= @profile.name %> image" class="profile-image">
+      <% if @profile.image.attached? %>
+        <%= image_tag @profile.image, alt: @profile.name, style: "max-width: 300px;" %>
       <% else %>
         <div class="default-image">No Image</div>
       <% end %>

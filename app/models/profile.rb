@@ -1,5 +1,6 @@
 class Profile < ApplicationRecord
   belongs_to :user
+  has_one_attached :image
 
   # List of Norse deities
   NORSE_DEITIES = [
@@ -8,5 +9,4 @@ class Profile < ApplicationRecord
 
   validates :name, presence: true
   validates :patron_deity, inclusion: { in: NORSE_DEITIES, message: "%{value} is not a valid deity" }
-  validates :image, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "must be a valid URL" }, allow_blank: true
 end
