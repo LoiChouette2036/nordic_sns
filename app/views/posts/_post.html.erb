@@ -1,30 +1,50 @@
-<div class="card mb-3" id="post_<%= post.id %>">
-  <div class="card-body">
-    <h6 class="card-subtitle mb-2 text-muted"><%= post.user.email %></h6>
-    <p class="card-text"><%= post.content %></p>
-    <small class="text-muted"><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
-    
-    <!-- Section des likes -->
-    <div id="post_<%= post.id %>_likes">
-      <%= post.likes.count %> Likes
-      <% like = current_user.likes.find_by(post: post) %>
-      <% if like.nil? %>
-        <%= button_to "Like", post_likes_path(post), method: :post, params: { like: { post_id: post.id } }, 
-                      class: "btn btn-primary btn-sm", 
-                      data: { turbo_stream: true } %>
-      <% else %>
-        <%= button_to "Unlike", post_like_path(post, like), method: :delete, 
-                      class: "btn btn-danger btn-sm", 
-                      data: { turbo_stream: true, confirm: "Are you sure to delete your like?" } %>
-      <% end %>
-    </div>
+<!-- app/views/posts/_post.html.erb -->
 
-    <!-- Section des commentaires -->
-    <div class="mt-2">
-      <button class="btn btn-secondary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_<%= post.id %>" aria-controls="offcanvas_<%= post.id %>">
-        Comment
-      </button>
-    </div>
+<div class="single-post" id="post_<%= post.id %>">
+  <div class="post-author">
+    <%= post.user.email %>
+  </div>
+
+  <div class="post-content">
+    <%= post.content %>
+  </div>
+
+  <div class="post-date">
+    <%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+  </div>
+
+  <!-- Likes Section -->
+  <div class="post-likes" id="post_<%= post.id %>_likes">
+    <%= post.likes.count %> Likes
+    <% like = current_user.likes.find_by(post: post) %>
+    <% if like.nil? %>
+      <%= button_to "Like",
+                    post_likes_path(post),
+                    method: :post,
+                    params: { like: { post_id: post.id } },
+                    class: "like-button",
+                    data: { turbo_stream: true } %>
+    <% else %>
+      <%= button_to "Unlike",
+                    post_like_path(post, like),
+                    method: :delete,
+                    class: "unlike-button",
+                    data: { turbo_stream: true, confirm: "Are you sure you want to remove your like?" } %>
+    <% end %>
+  </div>
+
+  <!-- Comment Section -->
+  <div>
+    <button 
+      class="comment-button" 
+      type="button" 
+      data-bs-toggle="offcanvas" 
+      data-bs-target="#offcanvas_<%= post.id %>" 
+      aria-controls="offcanvas_<%= post.id %>"
+    >
+      Comment
+    </button>
+
     <%= render "posts/comment_sidebar", post: post %>
   </div>
 </div>

@@ -1,0 +1,210 @@
+@import "variables";
+
+/**************************************
+ * Conversations Index (list, search)
+ **************************************/
+.conversations-index-container {
+  width: 80%;
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: darken($accent-color, 2%); 
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  color: $text-color;
+
+  .page-title {
+    font-family: $heading-font;
+    font-size: 2rem;
+    color: $primary-color;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .search-section {
+    margin-bottom: 2rem;
+
+    .form-control {
+      border: 2px solid $primary-color;
+      border-radius: 6px;
+      &:focus {
+        box-shadow: 0 0 5px rgba(255,215,0,0.8);
+        outline: none;
+      }
+    }
+  }
+
+  .conversations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .conversation-item {
+      background-color: rgba(0,0,0,0.2);
+      border: 2px solid $primary-color;
+      border-radius: 6px;
+      padding: 1rem;
+
+      /* You might have a link or text inside _conversation partial.
+         If it's a link, style the link here: */
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: $heading-font;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+
+        &:hover {
+          background-color: lighten($primary-color, 10%);
+          color: #000;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+/**************************************
+ * Conversation Show (messages, form)
+ **************************************/
+.conversation-show-container {
+  width: 85%;
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: darken($accent-color, 2%);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  color: $text-color;
+
+  .conversation-title {
+    font-family: $heading-font;
+    font-size: 2rem;
+    color: $primary-color;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin-bottom: 1rem;
+    text-align: center;
+
+    .conversation-status {
+      display: inline-block;
+      margin-left: 1rem;
+      font-size: 1rem;
+      color: lighten($text-color, 20%);
+    }
+  }
+
+  .messages-container {
+    width: 100%;
+    max-height: 400px; /* or remove if you want dynamic height */
+    overflow-y: auto;
+    border: 2px solid $primary-color;
+    border-radius: 8px;
+    background-color: rgba(0,0,0,0.2);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+
+    #messages {
+      .message {
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        border-radius: 6px;
+        background-color: #fff; 
+        color: #000;
+        border: 1px solid #ddd;
+      }
+
+      .user-message {
+        background-color: #e6f7ff;
+        text-align: right;
+      }
+
+      .other-message {
+        background-color: #f7f7f7;
+        text-align: left;
+      }
+    }
+
+    .load-more-messages {
+      text-align: center;
+      margin-bottom: 1rem;
+
+      #load-more-button {
+        background-color: #777;
+        border: none;
+        color: #fff;
+        font-family: $body-font;
+        border-radius: 6px;
+        padding: 0.4rem 0.8rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        font-weight: bold;
+
+        &:hover {
+          background-color: lighten(#777, 10%);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .new-message-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .form-label {
+      font-weight: bold;
+      color: $primary-color;
+      font-family: $heading-font;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .form-control {
+      border: 2px solid $primary-color;
+      border-radius: 6px;
+      &:focus {
+        box-shadow: 0 0 5px rgba(255,215,0,0.8);
+        outline: none;
+      }
+    }
+
+    .btn.btn-primary {
+      background-color: $primary-color;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-family: $body-font;
+
+      &:hover {
+        background-color: lighten($primary-color, 10%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .back-to-conversations {
+    background-color: #777;
+    border: none;
+    color: #fff;
+    font-family: $body-font;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    display: inline-block;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+
+    &:hover {
+      background-color: lighten(#777, 10%);
+      transform: translateY(-2px);
+    }
+  }
+}

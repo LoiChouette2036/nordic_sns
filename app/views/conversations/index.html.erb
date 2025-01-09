@@ -1,36 +1,41 @@
-<h1>Your Conversations</h1>
+<!-- app/views/conversations/index.html.erb -->
 
-<!-- Container for searching users -->
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="form-group position-relative" data-controller="search">
-        <input 
-          type="text" 
-          class="form-control"
-          id="userSearch"
-          placeholder="Search for users..."
-          data-action="keyup->search#query"
-        />
-        <ul 
-          class="list-group position-absolute w-100 mt-1" 
-          id="searchResults"
-          data-search-target="results"
-          style="z-index: 1000; display: none;"
-        >
-          <!-- Results will be displayed here -->
-        </ul>
+<!-- Outer wrapper for styling the whole page -->
+<div class="conversations-index-container">
+  <h1 class="page-title">Your Conversations</h1>
+
+  <!-- Container for searching users (retains your logic) -->
+  <div class="search-section container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group position-relative" data-controller="search">
+          <input 
+            type="text" 
+            class="form-control"
+            id="userSearch"
+            placeholder="Search for users..."
+            data-action="keyup->search#query"
+          />
+          <ul 
+            class="list-group position-absolute w-100 mt-1" 
+            id="searchResults"
+            data-search-target="results"
+            style="z-index: 1000; display: none;"
+          >
+            <!-- Results will be displayed here -->
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- This element will contain all accepted conversations -->
-<div id="conversations">
-  <!-- Show all accepted conversations for current_user -->
-  <% @conversations.each do |conversation| %>
-    <div id="conversation_<%= conversation.id %>">
-      <%= render "conversations/conversation", conversation: conversation %>
-    </div>
-  <% end %>
+  <!-- Conversations list wrapper -->
+  <div class="conversations-list" id="conversations">
+    <!-- Show all accepted conversations for current_user -->
+    <% @conversations.each do |conversation| %>
+      <div class="conversation-item" id="conversation_<%= conversation.id %>">
+        <%= render "conversations/conversation", conversation: conversation %>
+      </div>
+    <% end %>
+  </div>
 </div>

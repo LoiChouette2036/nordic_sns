@@ -1,42 +1,38 @@
 <!-- app/views/posts/index.html.erb -->
 
-<div class="container mt-5">
-  <!-- Section pour afficher les erreurs liées aux likes -->
+<div class="posts-container">
+  <!-- Section to display errors related to likes -->
   <div id="like_errors"></div>
-  <h1>Post</h1>
 
-  <div class="row">
-    <!-- Formulaire de Création de Poste -->
-    <div class="col-12">
-      <div class="card p-3 mb-3">
-        <h5 class="card-title">Créer un Nouveau Post</h5>
-        <%= render "posts/form", post: @post %>
-      </div>
-    </div>
+  <h1>Posts</h1>
+
+  <!-- Create New Post Section -->
+  <div class="create-post-section">
+    <h2>Create a New Post</h2>
+    <%= render "posts/form", post: @post %>
   </div>
 
-  <div class="row">
-    <!-- Liste des Posts -->
-    <div class="col-12">
-      <div class="card p-3" style="max-height: 500px; overflow-y: auto;" id="location-posts">
-        <% @posts.each do |post| %>
-          <%= render "posts/post", post: post %>
-        <% end %>
-      </div>
-
-      <% if @posts.next_page %>
-        <!-- Bouton "Load More" placé en dehors du conteneur des messages -->
-        <div id="posts_load_more" class="text-center mt-3" data-controller="load-more">
-          <%= link_to "Load More", posts_path(page: @posts.next_page, format: :turbo_stream), 
-                      data: { turbo_frame: "posts", turbo: "false" }, 
-                      class: "btn btn-primary", 
-                      id: "load-more-button", 
-                      aria: { label: "Load more posts" } %>
-        </div>
-      <% end %>
-    </div>
+  <!-- Posts List -->
+  <div class="posts-list" id="location-posts">
+    <% @posts.each do |post| %>
+      <%= render "posts/post", post: post %>
+    <% end %>
   </div>
 
-  <!-- Lien pour Retourner au Profil -->
-  <%= link_to "Return to profile", profile_path, class: "btn btn-secondary mt-3", id: "return-to-profile-button" %>
+  <!-- "Load More" button (if there are additional pages) -->
+  <% if @posts.next_page %>
+    <div class="load-more-area" id="posts_load_more" data-controller="load-more">
+      <%= link_to "Load More", 
+                  posts_path(page: @posts.next_page, format: :turbo_stream), 
+                  data: { turbo_frame: "posts", turbo: "false" }, 
+                  class: "btn btn-primary", 
+                  id: "load-more-button", 
+                  aria: { label: "Load more posts" } %>
+    </div>
+  <% end %>
+
+  <!-- Return to Profile link -->
+  <%= link_to "Return to Profile", profile_path,
+              class: "btn btn-secondary mt-3", 
+              id: "return-to-profile-button" %>
 </div>

@@ -5,25 +5,81 @@
 @import "messages";
 @import "pages/home";
 @import "pages/login";
+@import "pages/profile";
+@import "pages/posts";
+@import "pages/conversations";
+@import "pages/products";
+
 
 
 // Global styles
 body {
-    background-color:  #1A1A40;
-    color: #F5F5F5;
-    font-family: $body-font;
-    margin: 0;
-    padding: 0;
+  /* Primary page background & font defaults */
+  background-color: #1A1A40;
+  color: #F5F5F5;
+  font-family: $body-font;
+  margin: 0;
+  padding: 0;
+
+  /*
+   * Extra spacing so the absolutely positioned .user-info
+   * at the top doesn’t collide with the main page content.
+   * Increase or decrease this value to taste.
+   */
+  padding-top: 4rem; 
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: $heading-font;
-    color: $primary-color;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-family: $heading-font;
+  color: $primary-color;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 p {
+  font-family: $body-font;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* 
+ * -------------------------------------------
+ *  Extra styling for the "Welcome" & Logout
+ * -------------------------------------------
+ */
+.user-info {
+  /* Absolutely positioned at the top-right */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+
+  p {
+    margin: 0;
+    color: #F5F5F5;
+    font-weight: bold;
+    font-size: 1rem; /* Adjust as needed */
+  }
+
+  .logout-btn {
+    background-color: #E74C3C;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     font-family: $body-font;
-    font-size: 1.2rem;
-    line-height: 1.6;
+
+    &:hover {
+      background-color: lighten(#E74C3C, 10%);
+      transform: translateY(-2px);
+    }
+  }
 }

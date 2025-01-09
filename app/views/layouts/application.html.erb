@@ -23,8 +23,14 @@
 
     <% if user_signed_in? %>
       <%= turbo_stream_from current_user %>
-      <p>Welcome, <%= current_user.email %>!</p>
-      <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+      <!-- Wrap welcome text and logout button in .user-info -->
+      <div class="user-info">
+        <p>Welcome, <%= current_user.email %>!</p>
+        <%= button_to "Logout",
+                      destroy_user_session_path,
+                      method: :delete,
+                      class: "btn btn-danger logout-btn" %>
+      </div>
     <% else %>
       <% unless current_page?(new_user_session_path) %>
         <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>

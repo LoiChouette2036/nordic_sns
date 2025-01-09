@@ -1,4 +1,6 @@
-<%= form_with model: @product,local: true do |form| %>
+<!-- app/views/products/_product_form.html.erb -->
+
+<%= form_with model: @product, local: true do |form| %>
   <div class="mb-3">
     <%= form.label :title, class: "form-label" %>
     <%= form.text_field :title, class: "form-control", required: true %>
@@ -24,7 +26,10 @@
     <%= form.file_field :image, class: "form-control" %>
   </div>
 
+  <!-- Keep .d-grid if you're relying on Bootstrap for vertical button sizing -->
   <div class="d-grid">
-    <%= form.submit class: "btn btn-primary" %>
+    <!-- Change the text from default to something like "Create Product" -->
+    <!-- Switch to .btn.btn-warning for that gold vibe -->
+    <%= form.submit "Create Product", class: "btn btn-warning" %>
   </div>
 <% end %>

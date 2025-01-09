@@ -1,0 +1,209 @@
+@import "variables"; // Make sure you import your variables so you can use them here
+
+.profile-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  background-color: $accent-color; // Dark gray from your variables
+  padding: $default-padding * 2;
+  border-radius: 12px;
+  box-shadow: $box-shadow;
+  color: $text-color;
+
+  // If you want a semi-transparent overlay effect:
+  // background-color: rgba($accent-color, 0.85); 
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
+}
+
+.profile-image-wrapper {
+  flex-shrink: 0;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; 
+  overflow: hidden; // Ensures the image is fully contained in the circle
+  border: 2px solid $primary-color; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .default-image {
+    width: 100%;
+    height: 100%;
+    background-color: lighten($accent-color, 10%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $primary-color; 
+    font-weight: bold;
+    font-family: $heading-font;
+  }
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // Ensures the image fills the circle
+  object-position: center;
+}
+
+.profile-details {
+  flex: 1;
+
+  .profile-name {
+    font-family: $heading-font;
+    font-size: 2.5rem;
+    color: $primary-color;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  .profile-deity {
+    font-size: 1.2rem;
+    color: $text-color;
+    background-color: darken($accent-color, 5%);
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.profile-bio {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-family: $heading-font;
+    font-size: 1.8rem;
+    color: $primary-color;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  p {
+    font-family: $body-font;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background-color: rgba(#fff, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+  }
+}
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  .btn {
+    background-color: $primary-color;
+    color: #000;
+    border: none;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      background-color: lighten($primary-color, 10%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.profile-requests {
+  background-color: darken($accent-color, 2%);
+  border-radius: 8px;
+  padding: $default-padding;
+
+  h2 {
+    font-family: $heading-font;
+    font-size: 1.6rem;
+    color: $primary-color;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+/********************************
+ * Edit Profile Page Styles
+ ********************************/
+ .edit-profile-container {
+  /* Increase overall width and reduce max-width constraints */
+  width: 80%;
+  max-width: 900px;  /* bigger than before */
+  margin: 3rem auto;
+  padding: 3rem;     /* bigger padding for a larger feel */
+  background-color: darken($accent-color, 2%);
+  border-radius: 12px;
+  box-shadow: $box-shadow;
+  color: $text-color;
+
+  /* Enlarge the heading */
+  h1 {
+    font-family: $heading-font;
+    font-size: 2.5rem;  /* bigger heading text */
+    color: $primary-color;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
+
+.edit-profile-form {
+  background-color: rgba(#000, 0.25);
+  padding: 2rem; /* more interior space */
+  border-radius: 8px;
+
+  .form-label {
+    font-weight: bold;
+    color: $primary-color;
+    font-family: $heading-font;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem; /* slightly bigger label text */
+  }
+
+  .form-control,
+  .form-select {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid $primary-color;
+    border-radius: 6px;
+    padding: 0.75rem 1rem; /* bigger input fields */
+    margin-bottom: 1rem;
+    font-size: 1.1rem;     /* bigger text in fields */
+
+    &:focus {
+      box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+      outline: none;
+    }
+  }
+
+  .btn {
+    background-color: $primary-color;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem; /* bigger button */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-family: $body-font;
+    font-size: 1.1rem; /* bigger text in button */
+
+    &:hover {
+      background-color: lighten($primary-color, 10%);
+      transform: translateY(-2px);
+    }
+  }
+}

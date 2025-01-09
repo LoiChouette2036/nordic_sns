@@ -1,33 +1,48 @@
-<h1>Conversation #<%= @conversation.id %></h1>
-<p>Status: <%= @conversation.status %></p>
+<!-- app/views/conversations/show.html.erb -->
 
-<%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
+<div class="conversation-show-container">
+  <h1 class="conversation-title">
+    Conversation #<%= @conversation.id %>
+    <span class="conversation-status">Status: <%= @conversation.status %></span>
+  </h1>
 
-<div id="messages-container" class="messages-container" data-controller="messages" data-messages-target="container">
-  <!-- Load Older Messages Button -->
-  <% if @pagy.pages > 1 %>
-    <div id="load-more">
-      <%= link_to "Load older messages",
-                  conversation_path(@conversation, page: @pagy.next),
-                  remote: true,
-                  class: "btn btn-secondary mb-3",
-                  id: "load-more-button",
-                  data: { action: "click->messages#loadMore", messages_target: "loadMoreButton" } %>
-    </div>
-  <% end %>
-  
-  <div id="messages">
+  <!-- Turbo stream subscription for messages -->
+  <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
+
+  <!-- Messages container with Stimulus -->
+  <div 
+    id="messages-container" 
+    class="messages-container" 
+    data-controller="messages" 
+    data-messages-target="container"
+  >
+    <!-- Load Older Messages Button -->
+    <% if @pagy.pages > 1 %>
+      <div id="load-more" class="load-more-messages">
+        <%= link_to "Load older messages",
+                    conversation_path(@conversation, page: @pagy.next),
+                    remote: true,
+                    class: "btn btn-secondary mb-3",
+                    id: "load-more-button",
+                    data: { action: "click->messages#loadMore", messages_target: "loadMoreButton" } %>
+      </div>
+    <% end %>
+
+    <div id="messages">
       <%= render @messages.reverse, current_user: current_user %>
+    </div>
   </div>
+
+  <!-- New message form with Stimulus data -->
+  <div class="new-message-form">
+    <%= form_with(model: [@conversation, Message.new], local: false, data: { controller: "message-form", action: "turbo:submit-end->message-form#reset" }) do |form| %>
+      <div class="mb-3">
+        <%= form.label :content, "New message", class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", row: 3, data: { message_form_target: "input" } %>
+      </div>
+      <%= form.submit "Send Message", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <%= link_to "Back to Conversations", conversations_path, class: "btn btn-secondary mb-3 back-to-conversations" %>
 </div>
-
-<%= form_with(model: [@conversation, Message.new], local: false, data: { controller: "message-form", action: "turbo:submit-end->message-form#reset" }) do |form| %>
-  <div class="mb-3">
-    <%= form.label :content, "New message", class: "form-label" %>
-    <%= form.text_area :content, class: "form-control", row: 3, data: { message_form_target: "input" } %>
-  </div>
-  <%= form.submit "Send Message", class: "btn btn-primary" %>
-<% end %>
-
-<%= link_to "Back to Conversations", conversations_path, class: "btn btn-secondary mb-3" %>
-
