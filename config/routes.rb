@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       post :create_checkout_session
     end
   end
-  resources :orders, only: [ :index, :show, :create ]
+  # resources :orders, only: [ :index, :show, :create ]
 
   get "checkout/success", to: "checkout#success", as: "checkout_success"
   get "checkout/cancel", to: "checkout#cancel", as: "checkout_cancel"

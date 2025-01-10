@@ -62,6 +62,13 @@ class ProductsController < ApplicationController
       mode: "payment",
       success_url: checkout_success_url, # Redirect after a successful payment
       cancel_url: checkout_cancel_url,    # Redirect if the user cancels the payment
+
+      # This tells Stripe to collect shipping details
+      shipping_address_collection: {
+        allowed_countries: [ "US", "FR", "CA", "GB" ]
+      },
+
+      # We can store minimal references in metadata
       metadata: {
         product_id: product.id, # Add the product ID
         user_id: current_user.id # Add the user ID
