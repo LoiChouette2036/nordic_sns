@@ -15,6 +15,10 @@ class ProfilesController < ApplicationController
   end
 
   def show
+    @pending_conversations = Conversation.where(
+    receiver_id: current_user.id,
+    status: "pending"
+  )
   end
 
   def edit

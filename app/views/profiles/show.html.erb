@@ -29,6 +29,9 @@
 
   <div id="pending-requests" class="profile-requests">
     <h2>Pending Conversation Requests</h2>
-    <!-- The pending_request partial is appended here by broadcast_to_receiver -->
+      <!-- The pending_request partial is appended here by broadcast_to_receiver -->
+      <% @pending_conversations.each do |conversation| %>
+        <%= render "conversations/pending_request", conversation: conversation %>
+      <% end %>
   </div>
 </div>

@@ -7,7 +7,7 @@
     <!-- Original Post -->
     <div class="card mb-3">
       <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted post-label"><%= post.user.email %></h6>
+        <h6 class="card-subtitle mb-2 text-muted post-label"><%= post.user.profile.name %></h6>
         <p class="card-text"><%= post.content %></p>
         <small class="text-muted post-label-date"><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
       </div>

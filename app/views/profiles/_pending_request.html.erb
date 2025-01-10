@@ -1,7 +1,7 @@
 <div data-controller="conversation"
      data-conversation-id="<%= conversation.id %>"
      data-conversation-target="request">
-  <p><strong>Request from:</strong> <%= conversation.sender.email %></p>
+  <p><strong>Request from:</strong> <%= conversation.sender.profile.name %></p>
   <button data-action="conversation#accept">Accept</button>
   <button data-action="conversation#decline">Decline</button>
 </div>
