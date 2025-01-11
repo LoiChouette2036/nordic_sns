@@ -6,6 +6,4 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-production:
-  service: Disk
-  root: <%= Rails.root.join("storage") %>
+# Add cloud storage configuration if needed.
