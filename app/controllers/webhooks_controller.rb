@@ -1,6 +1,6 @@
 # app/controllers/webhook_controller.rb
 
-class WebhookController < ApplicationController
+class WebhooksController < ApplicationController
   # We skip CSRF checks for webhooks
   skip_before_action :verify_authenticity_token
 
